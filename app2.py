@@ -268,19 +268,19 @@ with st.sidebar:
         st.rerun()
 
     if current_role == "admin":
-        with st.expander("👥 User Admin", expanded=False):
-            with st.form("create_user_form"):
-                new_user = st.text_input("New Username")
-                new_pass = st.text_input("New Password", type="password")
-                new_role = st.selectbox("Role", ["ops", "manager", "admin"])
-                new_workspace = st.text_input("Workspace", value=st.session_state["active_workspace"])
-                create_submit = st.form_submit_button("Create User")
-            if create_submit:
-                ok, msg = create_user(engine, new_user, new_pass, new_role, new_workspace)
-                if ok:
-                    st.success(msg)
-                else:
-                    st.error(msg)
+        st.markdown("### 👥 User Admin")
+        with st.form("create_user_form", clear_on_submit=True):
+            new_user = st.text_input("New Username")
+            new_pass = st.text_input("New Password", type="password")
+            new_role = st.selectbox("Role", ["ops", "manager", "admin"])
+            new_workspace = st.text_input("Workspace", value=st.session_state["active_workspace"])
+            create_submit = st.form_submit_button("Create User", use_container_width=True)
+        if create_submit:
+            ok, msg = create_user(engine, new_user, new_pass, new_role, new_workspace)
+            if ok:
+                st.success(msg)
+            else:
+                st.error(msg)
 
     st.markdown("---")
     api_key = st.text_input("🔑 Gemini API Key", type="password")
