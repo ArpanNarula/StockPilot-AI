@@ -30,7 +30,7 @@ DATABASE_URL = "postgresql+psycopg2://USER:PASSWORD@HOST:5432/DBNAME"
 ## Persistence Notes
 
 - If `DATABASE_URL` is set, app data persists in Postgres.
-- If not set, the app falls back to local SQLite (`stockpilot.db`), which is not durable on Streamlit Cloud.
+- If not set (or invalid), the app falls back to local SQLite in `/tmp/stockpilot.db`, which is not durable on Streamlit Cloud.
 
 ## Demo Users
 

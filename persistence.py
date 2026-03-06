@@ -1,12 +1,19 @@
 import hashlib
 import os
+import tempfile
 from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 from sqlalchemy import Column, DateTime, Integer, MetaData, String, Table, Text, create_engine, desc, select
 
 
-DEFAULT_DB_URL = "sqlite:///stockpilot.db"
+def _default_sqlite_url() -> str:
+    db_path = Path(tempfile.gettempdir()) / "stockpilot.db"
+    return f"sqlite:///{db_path.as_posix()}"
+
+
+DEFAULT_DB_URL = _default_sqlite_url()
 
 metadata = MetaData()
 

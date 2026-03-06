@@ -184,7 +184,16 @@ ROLE_PAGE_ACCESS = {
 ROLE_INTEGRATIONS = {"manager", "admin"}
 
 engine = get_engine()
-init_db(engine)
+try:
+    init_db(engine)
+except Exception:
+    # Streamlit Cloud can fail on non-writable paths or invalid DB URLs.
+    engine = get_engine("sqlite:////tmp/stockpilot.db")
+    init_db(engine)
+    st.warning(
+        "Primary database unavailable. Running on temporary local storage. "
+        "Set a valid DATABASE_URL in Streamlit secrets for persistent data."
+    )
 seed_default_users(engine)
 
 st.session_state.setdefault("auth_user", None)
